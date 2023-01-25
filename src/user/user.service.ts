@@ -1,14 +1,19 @@
-import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
-import {InjectModel} from "@nestjs/sequelize";
-import {User} from "./user.model";
-import {RoleService} from "../role/role.service";
+import { InjectModel } from '@nestjs/sequelize';
+import { User } from './user.model';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User) private userRepository: typeof User,
-  private roleService: RoleService) {
-  }
+  constructor(
+    @InjectModel(User) private userRepository: typeof User,
+    private roleService: RoleService,
+  ) {}
 
   async getAll() {
     return this.userRepository.findAll({ include: { all: true } });
@@ -26,8 +31,11 @@ export class UserService {
       await createdUser.$set('roles', [role.id]);
       return createdUser;
     } catch (e) {
-      console.log(e);
-      throw new BadRequestException({ message: 'bad request'})
+      throw new BadRequestException({ message: 'bad request' });
     }
+  }
+
+  async findOne(userName: string) {
+    return this.userRepository.findOne({ where: { email: userName } });
   }
 }

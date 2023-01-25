@@ -7,12 +7,13 @@ import { CarModule } from './car/car.module';
 import { UserService } from './user/user.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
-import * as process from "process";
-import {User} from "./user/user.model";
+import * as process from 'process';
+import { User } from './user/user.model';
 import { RoleModule } from './role/role.module';
-import {Car} from "./car/car.model";
-import {Role} from "./role/role.model";
-import {UserRoles} from "./role/user-role.model";
+import { Car } from './car/car.model';
+import { Role } from './role/role.model';
+import { UserRoles } from './role/user-role.model';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import {UserRoles} from "./role/user-role.model";
       // autoLoadModels: true,
     }),
     RoleModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
